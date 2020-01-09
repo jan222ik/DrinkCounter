@@ -1,20 +1,31 @@
 package com.github.jan222ik.eisteecounter.data.db
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.github.jan222ik.eisteecounter.data.dao.ConsumptionDao
 import com.github.jan222ik.eisteecounter.data.dao.DrinkDao
+import com.github.jan222ik.eisteecounter.data.entity.Consumption
 import com.github.jan222ik.eisteecounter.data.entity.Drink
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.time.LocalDateTime
 
-@Database(entities = [Drink::class], version = 1, exportSchema = false)
+@Database(entities = [Drink::class, Consumption::class], version = 1, exportSchema = false)
 abstract class DrinkDatabase : RoomDatabase() {
 
     abstract fun drinkDao(): DrinkDao
+    abstract fun consumptionDao(): ConsumptionDao
+
+    fun daos() : Pair<DrinkDao, ConsumptionDao> {
+        return Pair(drinkDao(), consumptionDao())
+    }
 
     companion object {
         @Volatile
@@ -53,7 +64,7 @@ abstract class DrinkDatabase : RoomDatabase() {
                 // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.drinkDao())
+                        populateDatabase(database.drinkDao(), database.consumptionDao())
                     }
                 }
             }
@@ -63,15 +74,15 @@ abstract class DrinkDatabase : RoomDatabase() {
          * Populate the database in a new coroutine.
          * If you want to start with more words, just add them.
          */
-        suspend fun populateDatabase(drinkDao: DrinkDao) {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate on creation.
+        suspend fun populateDatabase(drinkDao: DrinkDao, consumptionDao: ConsumptionDao) {
+            consumptionDao.deleteAll()
             drinkDao.deleteAll()
 
             var drink = Drink("Hello")
             drinkDao.insert(drink)
             drink = Drink("World!")
-            drinkDao.insert(drink)
+            val id = drinkDao.insert(drink)
+            consumptionDao.insert(Consumption(id.toInt(), 10))
         }
     }
 

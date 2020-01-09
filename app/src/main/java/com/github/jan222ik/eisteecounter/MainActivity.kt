@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         drinkVM = ViewModelProvider(this).get(DrinkVM::class.java)
 
-        drinkVM.allWords.observe(this, Observer { drinks ->
+        drinkVM.allDrinks.observe(this, Observer { drinks ->
             // Update the cached copy of the drinks in the adapter.
             drinks?.let { adapter.setDrinks(it) }
         })
@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, AddDrinkActivity::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
+
+        drinkVM.allConsumption.observe(this, Observer { consumptions ->
+            Toast.makeText(applicationContext, consumptions.joinToString { consumption -> "${consumption.drinkId}:${consumption.amount}"}, Toast.LENGTH_LONG).show()
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {

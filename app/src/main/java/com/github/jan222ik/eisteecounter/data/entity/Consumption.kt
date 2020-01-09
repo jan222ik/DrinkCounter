@@ -2,11 +2,17 @@ package com.github.jan222ik.eisteecounter.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-//@Entity
+@Entity
 data class Consumption(
-    //@PrimaryKey
-    //@ColumnInfo(name = "word")
-    val word: String
-)
+    @ForeignKey(entity = Drink::class, parentColumns = ["drinkId"], childColumns = ["drinkId"])
+    val drinkId: Int,
+    @ColumnInfo(name = "amount")
+    val amount: Int
+) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "consumptionId")
+    var consumptionId: Int? = null
+}
