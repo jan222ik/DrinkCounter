@@ -20,13 +20,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.github.jan222ik.eisteecounter.data.entity.Drink
 
 
 class DrinkListAdapter internal constructor(
-        context: Context
+        context: Context,
+        private val addDrinkAmountImpl: AddDrinkAmount
 ) : RecyclerView.Adapter<DrinkListAdapter.DrinkViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -34,6 +37,9 @@ class DrinkListAdapter internal constructor(
 
     inner class DrinkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val wordItemView: TextView = itemView.findViewById(R.id.textView)
+        val add05LBtn: Button = itemView.findViewById(R.id.add_button_half_L)
+        val add1LBtn: Button = itemView.findViewById(R.id.add_button_one_L)
+        val add1And05LBtn: Button = itemView.findViewById(R.id.add_button_one_and_half_L)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkViewHolder {
@@ -44,6 +50,23 @@ class DrinkListAdapter internal constructor(
     override fun onBindViewHolder(holder: DrinkViewHolder, position: Int) {
         val current = drinks[position]
         holder.wordItemView.text = "${current.drinkName} (${current.drinkId})"
+        holder.add05LBtn.setOnClickListener {
+            addDrinkAmount(current, 0.5)
+        }
+        holder.add1LBtn.setOnClickListener {
+            addDrinkAmount(current, 1.0)
+        }
+        holder.add1And05LBtn.setOnClickListener {
+            addDrinkAmount(current, 1.5)
+        }
+    }
+
+    fun addDrinkAmount(drink: Drink, amount: Double) {
+        addDrinkAmountImpl.addDrinkAmount(drink, amount)
+    }
+
+    interface AddDrinkAmount {
+        fun addDrinkAmount(drink: Drink, amount: Double)
     }
 
     internal fun setDrinks(words: List<Drink>) {

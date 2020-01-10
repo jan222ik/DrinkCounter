@@ -10,7 +10,7 @@ data class Consumption(
     @ForeignKey(entity = Drink::class, parentColumns = ["drinkId"], childColumns = ["drinkId"])
     val drinkId: Int,
     @ColumnInfo(name = "amount")
-    val amount: Int
+    var amount: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "consumptionId")

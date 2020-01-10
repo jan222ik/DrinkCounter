@@ -12,4 +12,12 @@ class DrinkRepository(private val drinkDao: DrinkDao, private val consumptionDao
     val allConsumption: LiveData<List<Consumption>> = consumptionDao.getAll()
 
     suspend fun insert(drink: Drink) = drinkDao.insert(drink)
+    suspend fun updateAmount(consumption: Consumption, toInt: Int) {
+        consumption.amount += toInt
+        consumptionDao.update(consumption)
+    }
+
+    suspend fun insertConsumption(consumption: Consumption) {
+        consumptionDao.insert(consumption)
+    }
 }

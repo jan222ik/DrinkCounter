@@ -19,4 +19,8 @@ limitations under the License. -->
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="hint_name_of_drink">Name of Drink</string>
+    <string name="plus_sign">+</string>
+    <string name="plus1dot5liter">+1.5L</string>
+    <string name="plus_half_liter">+0.5L</string>
+    <string name="plus_one_liter">+1L</string>
 </resources>

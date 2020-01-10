@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.github.jan222ik.eisteecounter.R
-import kotlinx.android.synthetic.main.activity_new_word.*
+import kotlinx.android.synthetic.main.activity_add_drink.*
+
 
 class AddDrinkActivity : AppCompatActivity() {
 

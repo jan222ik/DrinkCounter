@@ -78,10 +78,11 @@ abstract class DrinkDatabase : RoomDatabase() {
             consumptionDao.deleteAll()
             drinkDao.deleteAll()
 
-            var drink = Drink("Hello")
-            drinkDao.insert(drink)
-            drink = Drink("World!")
-            val id = drinkDao.insert(drink)
+            var drink = Drink("Pfirsich Eistee")
+            var id = drinkDao.insert(drink)
+            consumptionDao.insert(Consumption(id.toInt(), 40))
+            drink = Drink("ACE")
+            id = drinkDao.insert(drink)
             consumptionDao.insert(Consumption(id.toInt(), 10))
         }
     }

@@ -1,10 +1,7 @@
 package com.github.jan222ik.eisteecounter.data.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.github.jan222ik.eisteecounter.data.entity.Consumption
 import com.github.jan222ik.eisteecounter.data.entity.Drink
 
@@ -19,4 +16,7 @@ interface ConsumptionDao {
 
     @Query("DELETE FROM consumption")
     suspend fun deleteAll()
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun update(consumption: Consumption)
 }

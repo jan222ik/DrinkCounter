@@ -27,4 +27,13 @@ class DrinkVM(application: Application) : AndroidViewModel(application) {
     fun insert(drink: Drink) = viewModelScope.launch {
         repository.insert(drink)
     }
+
+    fun updateAmount(consumption: Consumption, amount: Double) = viewModelScope.launch {
+        repository.updateAmount(consumption, (amount*10).toInt())
+    }
+
+    fun createConsumption(drink: Drink, amount: Double) = viewModelScope.launch {
+        val consumption = Consumption(drinkId = drink.drinkId!!, amount = (amount * 10).toInt())
+        repository.insertConsumption(consumption)
+    }
 }
