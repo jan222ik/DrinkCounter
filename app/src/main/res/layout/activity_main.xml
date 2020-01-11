@@ -26,6 +26,33 @@ So, we are leaving the template code in. -->
     android:background="@android:color/darker_gray"
     >
 
+    <Button
+        android:id="@+id/prevDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/prev" />
+
+    <TextView
+        android:id="@+id/currentDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/prevDate"
+        app:layout_constraintRight_toLeftOf="@+id/nextDate"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignTop="@id/nextDate"
+        android:layout_alignBottom="@id/nextDate"
+        android:text="@string/placeHolderDate" />
+
+    <Button
+        android:id="@+id/nextDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/next" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
@@ -34,7 +61,7 @@ So, we are leaving the template code in. -->
         android:elevation="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/relLayout"
+        app:layout_constraintTop_toBottomOf="@+id/nextDate"
         tools:listitem="@layout/recyclerview_item"
         />
 

@@ -4,13 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity
 data class Consumption(
     @ForeignKey(entity = Drink::class, parentColumns = ["drinkId"], childColumns = ["drinkId"])
     val drinkId: Int,
     @ColumnInfo(name = "amount")
-    var amount: Int
+    var amount: Int,
+    @ColumnInfo(name = "date")
+    val date: LocalDate
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "consumptionId")

@@ -23,4 +23,6 @@ limitations under the License. -->
     <string name="plus1dot5liter">+1.5L</string>
     <string name="plus_half_liter">+0.5L</string>
     <string name="plus_one_liter">+1L</string>
+    <string name="prev"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
 </resources>

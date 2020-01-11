@@ -1,29 +1,29 @@
 package com.github.jan222ik.eisteecounter.data.db
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.github.jan222ik.eisteecounter.data.dao.ConsumptionDao
 import com.github.jan222ik.eisteecounter.data.dao.DrinkDao
 import com.github.jan222ik.eisteecounter.data.entity.Consumption
 import com.github.jan222ik.eisteecounter.data.entity.Drink
+import com.github.jan222ik.eisteecounter.data.typeconverter.LocalDateConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @Database(entities = [Drink::class, Consumption::class], version = 1, exportSchema = false)
+@TypeConverters(value = [LocalDateConverter::class])
 abstract class DrinkDatabase : RoomDatabase() {
 
     abstract fun drinkDao(): DrinkDao
     abstract fun consumptionDao(): ConsumptionDao
 
-    fun daos() : Pair<DrinkDao, ConsumptionDao> {
+    fun daos(): Pair<DrinkDao, ConsumptionDao> {
         return Pair(drinkDao(), consumptionDao())
     }
 
@@ -80,10 +80,11 @@ abstract class DrinkDatabase : RoomDatabase() {
 
             var drink = Drink("Pfirsich Eistee")
             var id = drinkDao.insert(drink)
-            consumptionDao.insert(Consumption(id.toInt(), 40))
+            val yesterday = LocalDate.now().minusDays(1)
+            consumptionDao.insert(Consumption(id.toInt(), 40, yesterday))
             drink = Drink("ACE")
             id = drinkDao.insert(drink)
-            consumptionDao.insert(Consumption(id.toInt(), 10))
+            consumptionDao.insert(Consumption(id.toInt(), 10, yesterday))
         }
     }
 
